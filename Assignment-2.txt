@@ -1,0 +1,33 @@
+1...CREATE DATABASE My_first_DB;
+2...show datbases;
+3...CREATE TABLE sales (
+  sale_id INT PRIMARY KEY,
+  product_id INT,
+  sale_date DATE,
+  quantity INT,
+  price DECIMAL(10, 2),
+  FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+4...CREATE TABLE products (
+  product_id INT PRIMARY KEY,
+  product_name VARCHAR(50),
+  category VARCHAR(50),
+  price DECIMAL(10, 2)
+);
+5...INSERT INTO products (product_id, product_name, category, price)
+VALUES
+  (1, 'A', 'Category A', 10.99),
+  (2, 'B', 'Category B', 15.99),
+  (3, 'C', 'Category A', 8.99);
+6...INSERT INTO sales (sale_id, product_id, sale_date, quantity, price)
+VALUES
+  (1, 100, '2023-05-01', 5, 2.95),
+  (2, 101, '2023-05-02', 3, 3.97),
+  (3, 101, '2023-05-03', 2, 1.98),
+  (4, 301, '2023-05-04', 7, 4.93);
+7...SELECT p.product_id, p.product_name
+FROM products pdfg
+LEFT JOIN sales s ON p.product_id = s.product_id
+WHERE s.sale_id IS NULL
+   OR s.sale_date < DATE_SUB(CURDATE(), INTERVAL 14 DAY)
+   OR s.sale_id IS NULL OR (SELECT COUNT(*) FROM sales WHERE product_id = p.product_id AND sale_date >= DATE_SUB(CURDATE(), INTERVAL 14 DAY)) = 0;
