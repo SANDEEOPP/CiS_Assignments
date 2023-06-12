@@ -1,0 +1,32 @@
+create table diff(customer int,date date );
+
+
+insert into date_diff(customer,date)
+VALUES
+(1111,'2020-12-1'),
+(1111,'2022-10-1'),
+(1111,'2022-09-1'),
+(1111,'2023-01-1'),
+(2222,'2023-05-1'),
+(2222,'2022-05-1'),
+(2222,'2022-09-1');
+
+select * from date_diff;
++----------+------------+
+| customer | date       |
++----------+------------+
+|     1111 | 2020-12-01 |
+|     1111 | 2022-10-01 |
+|     1111 | 2022-09-01 |
+|     1111 | 2023-01-01 |
+|     2222 | 2023-05-01 |
+|     2222 | 2022-05-01 |
+|     2222 | 2022-09-01 |
++----------+------------+
+7 rows in set (0.00 sec)
+
+select
+date,
+customer,
+DATDIFF(MONTH,LAG(date) OVER (PARTITION BY customer ORDER BY date),date)as Month_diff
+FROM customerdata ;
