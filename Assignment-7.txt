@@ -1,0 +1,21 @@
+import os
+import pandas as pd
+def file_names():
+    path=(r"C:\\Users\\sande\\OneDrive\\Desktop\\CiS(AWS Dataengineer)\\Data_sets\\")
+    file_names=os.listdir(path)
+    
+    for i in file_names:
+        p=path+i
+        
+        file_extension = os.path.splitext(p)[1]  # Get the file extension
+
+        if file_extension == '.xlsx':
+            dfs = pd.read_excel(p)
+            print("df_"+i)
+            print(dfs.head(10))
+        else:
+            df=pd.read_csv(p)
+            print("df_"+i)
+            print(df.head())
+        
+file_names()
